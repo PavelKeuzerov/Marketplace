@@ -28,4 +28,3 @@ class ApplicationController < ActionController::Base
     Rails.logger.info("CURRENT LOCALE #{I18n.locale}")
   end
 end
-
