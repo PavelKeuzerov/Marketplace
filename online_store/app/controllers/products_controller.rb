@@ -8,7 +8,6 @@ class ProductsController < ApplicationController
 
   def show
     @review = @product.reviews.build
-    # @reviews = Review.all
     @reviews = @product.reviews.order created_at: :desc
   end
 
@@ -16,10 +15,13 @@ class ProductsController < ApplicationController
     @product = Product.new
   end
 
-  def edit; end
+  def edit
+    authorize @product
+  end
 
   def create
-    @product = Product.new(product_params.merge(user_id: current_user.id))
+    @product = Product.new(product_params)
+    authorize @product
 
     if @product.save
       redirect_to products_path
@@ -37,7 +39,8 @@ class ProductsController < ApplicationController
   end
 
   def destroy
-    @product.destroy
+    @product.destroy(product_params)
+    authorize @product
 
     redirect_to products_path
   end
@@ -50,6 +53,6 @@ class ProductsController < ApplicationController
 
   def product_params
     params.require(:product).permit(:name, :category, :product_detail, :price, :location, :availability, :user_id,
-                                    pictures: [])
+                                    pictures: []).merge(user_id: current_user.id)
   end
 end
