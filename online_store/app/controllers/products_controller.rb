@@ -9,7 +9,7 @@ class ProductsController < ApplicationController
   def show
     @review = @product.reviews.build
     # @reviews = Review.all
-    @reviews = @product.reviews
+    @reviews = @product.reviews.order created_at: :desc
   end
 
   def new
