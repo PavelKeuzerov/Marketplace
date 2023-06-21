@@ -1,0 +1,9 @@
+<h1>Carts</h1>
+<% if @cart.cart_items.count > 0 %>
+  <%= render "carts/cart_items" %>
+  <p>Total: <%= @cart.total %>
+  <% else %>
+  <p>Your cart is empty <p>
+<% end%>
+
+

@@ -1,4 +1,12 @@
 Rails.application.routes.draw do
+  # resource :carts do
+  #   resources :cart_items
+  # end
+  # resource :carts
+  get 'carts', to: 'cart#show'
+  post 'carts/add'
+  post 'carts/remove'
+
   resources :products do
     resources :reviews
   end
