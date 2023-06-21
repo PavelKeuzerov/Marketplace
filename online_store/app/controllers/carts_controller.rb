@@ -1,4 +1,6 @@
 class CartsController < ApplicationController
+  before_action :set_cart_item, only: %i[remove]
+
   def show
     @render_cart = false
   end
@@ -17,6 +19,17 @@ class CartsController < ApplicationController
   end
 
   def remove
-    CartItem.find_by(id: params[:id]).destroy
+    # CartItem.find(params[:id]).destroy
+    if @cart_item.destroy
+      # head :no_content
+    else
+      render json: { error: @cart_item.errors.messages }, status: :unprocessable_entity
+    end
+  end
+
+  private
+
+  def set_cart_item
+    @cart_item = CartItem.find(params[:id])
   end
 end

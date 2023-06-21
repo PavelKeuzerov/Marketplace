@@ -9,6 +9,7 @@ class User < ApplicationRecord
   has_one_attached :avatar
   has_many :products
   has_many :reviews, as: :reviewable, dependent: :destroy
+  # has_one :cart
 
   validates :avatar, blob: { content_type: %w[image/png image/jpg image/jpeg], size_range: 1..5.megabytes }
   validates :email,    presence: true
