@@ -32,6 +32,7 @@
       <p class="alert"><%= alert %></p>
     <% end %>
     
+    <%= render partial: "carts/cart" if @render_cart%>
     <%= yield %>
 
     <footer>

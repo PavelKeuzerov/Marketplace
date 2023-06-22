@@ -29,15 +29,16 @@
     <%= product.availability %>
   </p>
 
-  <p>
-    <strong>User:</strong>
-    <%= product.user_id %>
-  </p>
-
   <div>
     <% product.pictures.each do |picture| %>
       <%= link_to image_tag(picture.variant(resize_to_limit: [150, 150])), picture %>
     <% end %>
   <div/>
+
+  <%= form_with(url: carts_add_path) do |f| %>
+    <%= f.hidden_field :id, value: product.id %>
+    <%= f.number_field :quantity, value: 0, min: 1 %>
+    <%= f.submit "Add To Cart" %>
+  <% end %>
 
 </div>

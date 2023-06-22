@@ -2,6 +2,8 @@ class Product < ApplicationRecord
   belongs_to :user
   has_many_attached :pictures
   has_many :reviews, as: :reviewable, dependent: :destroy
+  has_many :cart_items
+  has_many :carts, through: :cart_items
 
   validates :name, presence: true, length: { minimum: 2 }
   validates :product_detail, presence: true, length: { maximum: 255 }
