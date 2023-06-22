@@ -19,11 +19,11 @@ class CartsController < ApplicationController
   end
 
   def remove
-    # CartItem.find(params[:id]).destroy
     if @cart_item.destroy
       # head :no_content
     else
-      render json: { error: @cart_item.errors.messages }, status: :unprocessable_entity
+      redirect_to carts_path
+      # render json: { error: @cart_item.errors.messages }, status: :unprocessable_entity
     end
   end
 
