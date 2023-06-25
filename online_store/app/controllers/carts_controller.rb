@@ -15,16 +15,13 @@ class CartsController < ApplicationController
       current_cart_item.destroy
     else
       @cart.cart_items.create(product: @product, quantity:)
+      redirect_to carts_path
     end
   end
 
   def remove
-    if @cart_item.destroy
-      # head :no_content
-    else
-      redirect_to carts_path
-      # render json: { error: @cart_item.errors.messages }, status: :unprocessable_entity
-    end
+    @cart_item.destroy
+    redirect_to carts_path
   end
 
   private

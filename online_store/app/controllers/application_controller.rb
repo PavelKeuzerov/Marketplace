@@ -12,12 +12,11 @@ class ApplicationController < ActionController::Base
   private
 
   def initialize_cart
-    @cart ||= Cart.find_by(id: session[:cart_id])
+    @cart ||= Cart.find_or_create_by(user: current_user)
 
     return unless @cart.nil?
 
     @cart = Cart.create
-    session[:cart_id] = @cart.id
   end
 
   def set_render_cart
