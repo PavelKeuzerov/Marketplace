@@ -1,12 +1,6 @@
-Rails.application.routes.draw do
-  # resource :carts do
-  #   resources :cart_items
-  # end
-  # resource :carts
-  # get 'carts', to: 'cart#show'
-  # post 'carts/add'
-  # post 'carts/remove'
+require 'sidekiq/web'
 
+Rails.application.routes.draw do
 
   scope :cart, controller: 'carts' do
     get 'carts', to: 'cart#show'
@@ -25,4 +19,6 @@ Rails.application.routes.draw do
   root 'products#index'
 
   patch 'change_locale' => 'locales#change_locale'
+
+  mount Sidekiq::Web => '/sidekiq'
 end

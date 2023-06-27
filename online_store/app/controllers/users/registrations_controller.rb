@@ -2,13 +2,13 @@ module Users
   class RegistrationsController < Devise::RegistrationsController
     before_action :configure_sign_up_params, only: [:create]
 
-    # def create
-    #   super do |user|
-    #     if user.persisted?
-    #       Users::Confirmation::SendMail.call(user.id)
-    #     end
-    #   end
-    # end
+    def create
+      super do |user|
+        if user.persisted?
+          Users::Confirmation::SendMailWorker.perform_async(user.id)
+        end
+      end
+    end
 
     protected
 

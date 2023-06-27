@@ -2,6 +2,8 @@ class ProductsController < ApplicationController
   before_action :set_product, only: %i[show edit update destroy]
   before_action :authenticate_user!, only: %i[edit create update new destroy]
 
+  # caches_action :index
+
   def index
     @products = Product.all
   end
