@@ -77,12 +77,14 @@ group :test do
 end
 
 gem 'actionpack-action_caching'
+gem 'activeadmin'
 gem 'activestorage-validator'
 gem 'curb'
 gem 'devise'
 gem 'faker'
 gem 'image_processing'
 gem 'pundit'
+gem 'rails-i18n'
 gem 'redis'
 gem 'rolify'
 gem 'sassc-rails'
