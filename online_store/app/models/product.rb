@@ -1,5 +1,5 @@
 class Product < ApplicationRecord
-  belongs_to :user
+  belongs_to :user, optional: true
   has_many_attached :pictures
   has_many :reviews, as: :reviewable, dependent: :destroy
   has_many :cart_items

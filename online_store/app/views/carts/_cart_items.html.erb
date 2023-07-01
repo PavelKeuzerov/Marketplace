@@ -49,6 +49,11 @@
       <%= f.submit "Dellet to cart" %>
     <% end %>
 
+    <%= form_with(url: carts_remove_path) do |f| %>
+      <%= f.hidden_field :id, value: cart_item.id %>
+      <%= f.submit "Buy" %>
+    <% end %>
+
     <strong>Total:<strong>
     <%= cart_item.total %>
 <% end %>

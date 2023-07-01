@@ -33,7 +33,10 @@
     <% end %>
     
     <%= render partial: "carts/cart" if @render_cart%>
+
+
     <%= yield %>
+
 
     <footer>
       <% if user_signed_in? %>
@@ -47,7 +50,6 @@
     </footer>
   </body>
 </html>
-
 
 
 

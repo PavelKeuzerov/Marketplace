@@ -1,6 +1,8 @@
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
+  devise_for :admin_users, ActiveAdmin::Devise.config
+  ActiveAdmin.routes(self)
 
   scope :cart, controller: 'carts' do
     get 'carts', to: 'cart#show'
@@ -8,7 +10,7 @@ Rails.application.routes.draw do
     post 'carts/remove'
   end
 
-  resources :products do
+  resources :user, :products do
     resources :reviews
   end
 

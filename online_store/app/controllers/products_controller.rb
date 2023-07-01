@@ -2,8 +2,6 @@ class ProductsController < ApplicationController
   before_action :set_product, only: %i[show edit update destroy]
   before_action :authenticate_user!, only: %i[edit create update new destroy]
 
-  # caches_action :index
-
   def index
     @products = Product.all
   end
@@ -45,6 +43,10 @@ class ProductsController < ApplicationController
     authorize @product
 
     redirect_to products_path
+  end
+
+  def filter_product
+    render json: Products::FiterProduct.call
   end
 
   private
