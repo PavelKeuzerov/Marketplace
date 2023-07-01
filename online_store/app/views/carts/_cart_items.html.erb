@@ -41,12 +41,17 @@
     <%= form_with(url: carts_add_path) do |f| %>
       <%= f.hidden_field :id, value: product.id %>
       <%= f.number_field :quantity, value: cart_item.quantity, min: 0 %>
-      <%= f.submit "Buy" %>
+      <%= f.submit "Add To Cart" %>
     <% end %>
 
      <%= form_with(url: carts_remove_path) do |f| %>
       <%= f.hidden_field :id, value: cart_item.id %>
-      <%= f.submit "Remove from cart" %>
+      <%= f.submit "Dellet to cart" %>
+    <% end %>
+
+    <%= form_with(url: carts_remove_path) do |f| %>
+      <%= f.hidden_field :id, value: cart_item.id %>
+      <%= f.submit "Buy" %>
     <% end %>
 
     <strong>Total:<strong>

@@ -30,8 +30,16 @@ rescue ActiveRecord::PendingMigrationError => e
   abort e.to_s.strip
 end
 RSpec.configure do |config|
+  %i[controller view request].each do |type|
+    config.include(::Rails::Controller::Testing::TestProcess, type:)
+    config.include(::Rails::Controller::Testing::TemplateAssertions, type:)
+    config.include ::Rails::Controller::Testing::Integration, type:
+  end
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
+  config.include Devise::Test::IntegrationHelpers, type: :request
+  config.include FactoryBot::Syntax::Methods
+  config.include Devise::Test::ControllerHelpers, type: :controller
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
