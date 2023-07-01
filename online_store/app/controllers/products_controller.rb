@@ -45,6 +45,10 @@ class ProductsController < ApplicationController
     redirect_to products_path
   end
 
+  def filter_product
+    render json: Products::FiterProduct.call
+  end
+
   private
 
   def set_product

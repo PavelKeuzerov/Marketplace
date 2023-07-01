@@ -4,7 +4,7 @@ describe ProductsController, type: :controller do
   describe 'GET #index' do
     let(:product) { create :product }
 
-    subject { get :show, params: { id: product.id } } 
+    subject { get :show, params: { id: product.id } }
 
     context 'show product' do
       it 'render show view' do
@@ -52,5 +52,3 @@ describe ProductsController, type: :controller do
   #   end
   # end
 end
-
-

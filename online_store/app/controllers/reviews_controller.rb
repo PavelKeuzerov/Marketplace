@@ -1,6 +1,6 @@
 class ReviewsController < ApplicationController
   before_action :set_product, only: %i[edit update destroy create]
-  before_action :set_review, only: %i[edit update destroy ]
+  before_action :set_review, only: %i[edit update destroy]
 
   def update
     if @review.update(review_params.merge(user_id: current_user.id))
@@ -47,9 +47,6 @@ class ReviewsController < ApplicationController
   end
 end
 
-
-
-
 # class ReviewsController < ApplicationController
 #   # REVIEWABLE_TYPE_TO_DB_VIEW = {
 #   #   'user' => User.name,
@@ -95,11 +92,10 @@ end
 
 #     @reviewable = klass.find(params["#{klass.name.underscore}_id"])
 #   end
-    
+
 #   def set_review
 #     @product = @reviewable.is_a?(Review) ? @reviewable : @reviewable.product
 #   end
-    
 
 #   #  def set_review
 #   #   @review = Review.find(params[:id])
@@ -108,7 +104,7 @@ end
 #   def set_product
 #     @product = Product.find params[:product_id]
 #   end
-    
+
 #   def review_params
 #     params.require(:review).permit(:body, :rating, :user_id, :reviewable_type, :reviewable_id).to_h
 #   end
