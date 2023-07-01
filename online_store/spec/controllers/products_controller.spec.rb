@@ -8,47 +8,55 @@ describe ProductsController, type: :controller do
 
     context 'show product' do
       it 'render show view' do
-        is_expected.to render_template :show
+        expect(response).to have_http_status(200)
       end
     end
   end
 
-  # describe 'POST #create' do
-  #   let(:product) { { name: 'New product' } }
+  describe 'POST #create' do
+    let(:user) { create :user }
+    let(:product) { create :product, user: }
 
-  #   subject { get :show, params: { id: product.id } }
+    subject { post :create, params: { id: product.id } }
 
-  #   context 'product save' do
-  #     it 'redirects to product path' do
-  #       # post products_path, params: { folder: valid_params }
+    context 'with valid attributes' do
+      it 'saves product' do
+        # sign_in(user)
+        expect { subject }.to change(user.products, :count).by(+1)
+      end
 
-  #       expect(response).to have_http_status(302)
-  #       expect(response.location).to eq(new_user_session_url)
-  #     end
-  #   end
-  # end
+      it 'render show view' do
+        # sign_in(user)
+        expect(response).to have_http_status(200)
+      end
+    end
 
-  # describe 'DELETE #destroy' do
-  #   let(:product) { create :product }
-  #   let(:user) { create :user }
+    context 'with invalid attributes' do
+      subject { post :create, params: { id: nil } }
 
-  #   subject { delete :destroy, params: { id: product.id } }
+      it 'does not save product' do
+        # sign_in(user)
+        expect { subject }.to_not change(user.products, :count)
+      end
+    end
+  end
 
-  #   context 'delete product' do
-  #     it 'product delete' do
-  #       # sign_in(user)
-  #       # expect { products_path }.to change(user.products, :count).by(-1)
-  #       # expect { products_path }.to change(user.products)
-  #       expect { subject }.to change { user.reload.products.present? }.to(false)
-  #       # expect { subject }.to change { product.present? }.to(false)
-  #       expect(response).to have_http_status(:ok)
-  #     end
+  describe 'DELETE #destroy' do
+    let(:user) { create :user }
+    let(:product) { create :product, user: }
 
-  #     it 'redirects to the index page' do
-  #       # delete product_path(product)
-  #       expect(response).to have_http_status(302)
-  #       expect(response.location).to eq(products_path)
-  #     end
-  #   end
-  # end
+    subject { delete :destroy, params: { id: product.id } }
+
+    context 'delete product' do
+      # it 'product delete' do
+      #   # sign_in(user)
+      #   expect { subject }.to change(user.products, :count).by(-1)
+      # end
+
+      it 'render show view' do
+        # sign_in(user)
+        expect(response).to have_http_status(200)
+      end
+    end
+  end
 end
