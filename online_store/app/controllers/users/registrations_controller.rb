@@ -4,9 +4,7 @@ module Users
 
     def create
       super do |user|
-        if user.persisted?
-          user.add_role(params[:role])
-        end
+        user.add_role(params[:role]) if user.persisted?
       end
     end
 

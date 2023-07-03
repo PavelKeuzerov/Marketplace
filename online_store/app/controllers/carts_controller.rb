@@ -22,25 +22,6 @@ class CartsController < ApplicationController
     end
   end
 
-
-  # def add
-  #   @product = Product.in_stock.find_by(id: params[:id])
-  #   quantity = params[:quantity].to_i
-  #   current_cart_item = @cart.cart_items.find_by(product_id: @product.id) if @product.present?
-  #   if current_cart_item && quantity.positive?
-  #     current_cart_item.update(quantity:)
-  #   elsif quantity <= 0
-  #     current_cart_item.destroy
-  #   elsif
-  #     @cart.cart_items.create(product: @product, quantity:)
-  #     # CartMailWorker.perform_async(@cart_mail)
-  #     CartMailer.perform(@product.user, @cart).deliver_later
-  #     redirect_to carts_path
-  #   else
-  #      render 'products/show'
-  #   end
-  # end
-
   def remove
     @cart_item.destroy
     redirect_to carts_path

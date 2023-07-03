@@ -8,4 +8,3 @@ class CartMailWorker
     mail(to: user.email, subject: 'New cart')
   end
 end
-
