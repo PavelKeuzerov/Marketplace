@@ -2,7 +2,7 @@ class Role < ApplicationRecord
   USER = 'user'.freeze
   SELLER = 'seller'.freeze
   ADMIN = 'admin'.freeze
-  AVAILABLE_ROLES = [USER, SELLER, ADMIN].freeze
+  AVAILABLE_ROLES = [USER, SELLER].freeze
 
   has_and_belongs_to_many :users, join_table: :users_roles
 

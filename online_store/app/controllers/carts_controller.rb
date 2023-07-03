@@ -16,6 +16,8 @@ class CartsController < ApplicationController
       current_cart_item.destroy
     else
       @cart.cart_items.create(product: @product, quantity:)
+      # CartMailWorker.perform_async(@cart_mail)
+      CartMailer.perform(@product.user, @cart).deliver_later
       redirect_to carts_path
     end
   end

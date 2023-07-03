@@ -1,5 +1,9 @@
 class CartMailer < ApplicationMailer
-  def new_cart(user, cart)
+  include Sidekiq::Worker
+
+  sidekiq_options queue: :carts
+
+  def perform(user, cart)
     @cart = cart
     mail(
       to: user.email,
