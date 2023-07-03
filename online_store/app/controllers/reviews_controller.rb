@@ -18,7 +18,7 @@ class ReviewsController < ApplicationController
     @review = @product.reviews.build(review_params.merge(user_id: current_user.id))
     authorize @review
     if @review.save
-      # ReviewMailer.new_review(@product.user, @review).deliver_now
+      # ReviewMailer.perform(@product.user, @review).deliver_later
       redirect_to product_path(@product)
     else
       @reviews = @product.reviews.order created_at: :desc

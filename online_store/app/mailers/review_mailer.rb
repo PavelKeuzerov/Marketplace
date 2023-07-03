@@ -1,5 +1,9 @@
 class ReviewMailer < ApplicationMailer
-  def new_review(user, review)
+  include Sidekiq::Worker
+
+  sidekiq_options queue: :review
+
+  def perform(user, review)
     @review = review
     mail(
       to: user.email,

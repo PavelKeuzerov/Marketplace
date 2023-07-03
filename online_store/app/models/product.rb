@@ -12,4 +12,6 @@ class Product < ApplicationRecord
   validates :pictures, blob: { content_type: %w[image/png image/jpg image/jpeg], size_range: 1..5.megabytes }
   validates :availability, presence: true, inclusion: { in: ['in stock', 'out of stock'],
                                                         message: '%<value>s is not a valid' }
+
+  scope :in_stock, -> { where(availability: 'in stock') }
 end

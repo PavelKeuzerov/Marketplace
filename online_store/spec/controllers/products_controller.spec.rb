@@ -21,12 +21,10 @@ describe ProductsController, type: :controller do
 
     context 'with valid attributes' do
       it 'saves product' do
-        # sign_in(user)
         expect { subject }.to change(user.products, :count).by(+1)
       end
 
       it 'render show view' do
-        # sign_in(user)
         expect(response).to have_http_status(200)
       end
     end
@@ -35,7 +33,6 @@ describe ProductsController, type: :controller do
       subject { post :create, params: { id: nil } }
 
       it 'does not save product' do
-        # sign_in(user)
         expect { subject }.to_not change(user.products, :count)
       end
     end
@@ -43,18 +40,17 @@ describe ProductsController, type: :controller do
 
   describe 'DELETE #destroy' do
     let(:user) { create :user }
-    let(:product) { create :product, user: }
+    let!(:product) { create :product, user: }
 
     subject { delete :destroy, params: { id: product.id } }
 
     context 'delete product' do
-      # it 'product delete' do
-      #   # sign_in(user)
-      #   expect { subject }.to change(user.products, :count).by(-1)
-      # end
+      it 'product delete' do
+        # binding.pry
+        expect { subject }.to change(user.products, :count).from(1).to(0)
+      end
 
       it 'render show view' do
-        # sign_in(user)
         expect(response).to have_http_status(200)
       end
     end
