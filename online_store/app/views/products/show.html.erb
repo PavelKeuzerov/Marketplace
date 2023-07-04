@@ -1,0 +1,58 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @product %>
+
+<div>
+  <%= link_to "Back to products", products_path %>
+    <% if policy(@product).update?%>
+
+      <%= link_to "Edit this product", edit_product_path(@product) %> |
+      <%= button_to "Destroy this product", @product, method: :delete %>
+    <% end %>
+</div>
+
+<%= form_with model: [@product, @review] do |form| %>
+  <% if @review.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(@review.errors.count, "error") %> prohibited this review from being saved:</h2>
+
+      <ul>
+        <% @review.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :body, style: "display: block" %>
+    <%= form.text_area :body %>
+  </div>
+
+  <div>
+    <%= form.label :rating, style: "display: block" %>
+    <%= form.text_field :rating %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
+
+<h2> Reviews <h2>
+
+<% @reviews.each do |review| %>
+
+  <p>
+  <%= review.body %>
+  <%= review.rating %>
+  <p>
+
+   <%= link_to "Edit this review", edit_product_review_path(@product, review) %> 
+  
+  <% if policy(@review).destroy? %>
+    <%= button_to "Destroy this review", product_review_path(@product, review), method: :delete %>
+  <% end %>
+
+<% end %>
+

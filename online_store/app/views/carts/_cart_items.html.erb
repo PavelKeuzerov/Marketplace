@@ -1,0 +1,59 @@
+<% @cart.cart_items.each do |cart_item| %>
+  <% product = cart_item.product %>
+
+    <div id="<%= "cart-#{product.id}" %>">
+    <p>
+      <strong>Name:</strong>
+      <%= product.name %>
+    </p>
+
+    <p>
+      <strong>Category:</strong>
+      <%= product.category %>
+    </p>
+
+    <p>
+      <strong>Product detail:</strong>
+      <%= product.product_detail %>
+    </p>
+
+    <p>
+      <strong>Price:</strong>
+      <%= product.price %>
+    </p>
+
+    <p>
+      <strong>Location:</strong>
+      <%= product.location %>
+    </p>
+
+    <p>
+      <strong>Availability:</strong>
+      <%= product.availability %>
+    </p>
+
+    <div>
+      <% product.pictures.each do |picture| %>
+        <%= link_to image_tag(picture.variant(resize_to_limit: [150, 150])), picture %>
+      <% end %>
+    <div/>
+
+    <%= form_with(url: carts_add_path) do |f| %>
+      <%= f.hidden_field :id, value: product.id %>
+      <%= f.number_field :quantity, value: cart_item.quantity, min: 0 %>
+      <%= f.submit "Add To Cart" %>
+    <% end %>
+
+     <%= form_with(url: carts_remove_path) do |f| %>
+      <%= f.hidden_field :id, value: cart_item.id %>
+      <%= f.submit "Dellet to cart" %>
+    <% end %>
+
+    <%= form_with(url: carts_remove_path) do |f| %>
+      <%= f.hidden_field :id, value: cart_item.id %>
+      <%= f.submit "Buy" %>
+    <% end %>
+
+    <strong>Total:<strong>
+    <%= cart_item.total %>
+<% end %>

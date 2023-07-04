@@ -1,0 +1,11 @@
+<h1> Your shopping cart </h1>
+
+<% @cart.products.each do |product| %>
+  <p>Product:<%= product.name %>
+<% end %>
+
+<% @cart.cart_items.each do |cart_items| %>
+ <p>Quantity: <%= cart_items.quantity %>
+<% end %>
+
+<p>Total: <%= @cart.total %>
