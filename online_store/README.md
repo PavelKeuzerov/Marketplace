@@ -15,3 +15,19 @@ Main characteristics:
 * Ruby on Rails version - 7.0.5
 * Database version - postgres (PostgreSQL) 14.8
 
+Installation and setup
+Download the project:
+$ git clone https://github.com/PavelKeuzerov/Marketplace
+$ cd online_store
+
+Install the libraries:
+$ bundle install
+
+Create DB:
+$ rails db:create
+$ rails db:migrate
+
+Run application:
+$ rails s
+Run Sidekiq:
+$ rails sidekiq
