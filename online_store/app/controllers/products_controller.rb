@@ -39,6 +39,7 @@ class ProductsController < ApplicationController
   end
 
   def destroy
+    # binding.pry
     @product.destroy(product_params)
     authorize @product
 
