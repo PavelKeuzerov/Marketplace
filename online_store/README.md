@@ -17,7 +17,7 @@ Main characteristics:
 
 Installation and setup Download the project: 
 - git clone https://github.com/PavelKeuzerov/Marketplace 
--  cd online_store
+- cd online_store
 
 Install the libraries: 
 - bundle install
