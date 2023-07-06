@@ -39,7 +39,8 @@ class ProductsController < ApplicationController
   end
 
   def destroy
-    @product.destroy(product_params)
+    # binding.pry
+    @product.destroy
     authorize @product
 
     redirect_to products_path
