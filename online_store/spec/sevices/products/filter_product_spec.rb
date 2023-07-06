@@ -16,7 +16,7 @@ describe Products::FilterProduct do
       Product.create!(name: 'spoon', price: 11, location: 'Minsk', product_detail: 'aaaa', availability: 'in stock')
     end
 
-    let!(:product) { create :product}
+    let!(:product) { create :product }
 
     context 'when the price parameter' do
       let(:product_params) { { price: 8 } }
