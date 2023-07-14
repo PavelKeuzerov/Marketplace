@@ -1,12 +1,23 @@
 class ProductsController < ApplicationController
-  before_action :set_product, only: %i[show edit update destroy]
-  before_action :authenticate_user!, only: %i[edit create update new destroy]
+  # before_action :set_product, only: %i[show edit update destroy]
+  before_action :authenticate_user!, only: %i[edit create update new destroy show index]
 
   def index
     @products = Product.all
   end
 
+  def search
+    @product = ProductFilter::Search.call(params)
+    # @product = Product.where('name LIKE ?', "%#{params[:query]}%")
+    if @product.present?
+      @product
+    else
+      redirect_to products_path, notice: 'Not a valid combination'
+    end
+  end
+
   def show
+    @product = Product.find(params[:id])
     @review = @product.reviews.build
     @reviews = @product.reviews.order created_at: :desc
   end
@@ -16,6 +27,7 @@ class ProductsController < ApplicationController
   end
 
   def edit
+    @product = Product.find(params[:id])
     authorize @product
   end
 
@@ -31,6 +43,7 @@ class ProductsController < ApplicationController
   end
 
   def update
+    @product = Product.find(params[:id])
     if @product.update(product_params)
       redirect_to products_path
     else
@@ -39,6 +52,7 @@ class ProductsController < ApplicationController
   end
 
   def destroy
+    @product = Product.find(params[:id])
     # binding.pry
     @product.destroy
     authorize @product
@@ -46,15 +60,11 @@ class ProductsController < ApplicationController
     redirect_to products_path
   end
 
-  def filter_product
-    render json: Products::FiterProduct.call
-  end
-
   private
 
-  def set_product
-    @product = Product.find(params[:id])
-  end
+  # def set_product
+  #   @product = Product.find(params[:id])
+  # end
 
   def product_params
     params.require(:product).permit(:name, :category, :product_detail, :price, :location, :availability, :user_id,

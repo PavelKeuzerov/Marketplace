@@ -1,6 +1,6 @@
 class CartsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_cart_item, only: %i[remove]
+  # before_action :set_cart_item, only: %i[remove]
 
   def show
     @render_cart = false
@@ -17,19 +17,20 @@ class CartsController < ApplicationController
     else
       @cart.cart_items.create(product: @product, quantity:)
       # CartMailWorker.perform_async(@cart_mail)
-      CartMailer.perform(@product.user, @cart).deliver_later
+      # CartMailer.perform(@product.user, @cart).deliver_later
       redirect_to carts_path
     end
   end
 
   def remove
+    @cart_item = CartItem.find(params[:id])
     @cart_item.destroy
     redirect_to carts_path
   end
 
-  private
+  # private
 
-  def set_cart_item
-    @cart_item = CartItem.find(params[:id])
-  end
+  # def set_cart_item
+  #   @cart_item = CartItem.find(params[:id])
+  # end
 end
