@@ -1,5 +1,6 @@
 class ProductsController < ApplicationController
   # before_action :set_product, only: %i[show edit update destroy]
+  include ProductReview
   before_action :authenticate_user!, only: %i[edit create update new destroy show index]
 
   def index
@@ -8,7 +9,6 @@ class ProductsController < ApplicationController
 
   def search
     @product = ProductFilter::Search.call(params)
-    # @product = Product.where('name LIKE ?', "%#{params[:query]}%")
     if @product.present?
       @product
     else
@@ -17,9 +17,10 @@ class ProductsController < ApplicationController
   end
 
   def show
-    @product = Product.find(params[:id])
-    @review = @product.reviews.build
-    @reviews = @product.reviews.order created_at: :desc
+    load_product_review
+    # @product = Product.find(params[:id])
+    # @review = @product.reviews.build
+    # @reviews = @product.reviews.order created_at: :desc
   end
 
   def new
@@ -53,7 +54,6 @@ class ProductsController < ApplicationController
 
   def destroy
     @product = Product.find(params[:id])
-    # binding.pry
     @product.destroy
     authorize @product
 
