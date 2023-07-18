@@ -1,9 +1,11 @@
 class ProductsController < ApplicationController
-  # before_action :set_product, only: %i[show edit update destroy]
   include ProductReview
+  include VariableCart
   before_action :authenticate_user!, only: %i[edit create update new destroy show index]
+  before_action :initialize_cart, only: %i[index]
 
   def index
+    @render_cart = true
     @products = Product.all
   end
 
@@ -18,9 +20,6 @@ class ProductsController < ApplicationController
 
   def show
     load_product_review
-    # @product = Product.find(params[:id])
-    # @review = @product.reviews.build
-    # @reviews = @product.reviews.order created_at: :desc
   end
 
   def new
@@ -62,9 +61,11 @@ class ProductsController < ApplicationController
 
   private
 
-  # def set_product
-  #   @product = Product.find(params[:id])
-  # end
+  def initialize_cart
+    load_variable_cart
+
+    # @cart = Carts::InitializeCart.call(current_user.id)
+  end
 
   def product_params
     params.require(:product).permit(:name, :category, :product_detail, :price, :location, :availability, :user_id,

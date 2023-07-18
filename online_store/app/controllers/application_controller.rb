@@ -6,22 +6,8 @@ class ApplicationController < ActionController::Base
   end
 
   before_action :set_locale
-  before_action :set_render_cart
-  before_action :initialize_cart
 
   private
-
-  def initialize_cart
-    @cart ||= Cart.find_or_create_by(user: current_user)
-
-    return unless @cart.nil?
-
-    @cart = Cart.create
-  end
-
-  def set_render_cart
-    @render_cart = true
-  end
 
   def set_locale
     I18n.locale = if user_signed_in?

@@ -1,11 +1,9 @@
 class ReviewsController < ApplicationController
   include ProductReview
-  # before_action :set_product, only: %i[edit update destroy create]
-  # before_action :set_review, only: %i[edit update destroy]
+  include VariableReview
 
   def update
-    @product = Product.find params[:product_id]
-    @review = @product.reviews.find params[:id]
+    load_variable_review
     if @review.update(review_params.merge(user_id: current_user.id))
       redirect_to product_path(@product)
     else
@@ -14,8 +12,7 @@ class ReviewsController < ApplicationController
   end
 
   def edit
-    @product = Product.find params[:product_id]
-    @review = @product.reviews.find params[:id]
+    load_variable_review
     authorize @review
   end
 
@@ -27,28 +24,17 @@ class ReviewsController < ApplicationController
       redirect_to product_path(@product)
     else
       load_product_review
-      # @reviews = @product.reviews.order created_at: :desc
-      # render 'products/show'
     end
   end
 
   def destroy
-    @product = Product.find params[:product_id]
-    @review = @product.reviews.find params[:id]
+    load_variable_review
     authorize @review
     @review.destroy
     redirect_to product_path(@product)
   end
 
   private
-
-  # def set_product
-  #   @product = Product.find params[:product_id]
-  # end
-
-  # def set_review
-  #   @review = @product.reviews.find params[:id]
-  # end
 
   def review_params
     params.require(:review).permit(:body, :rating, :user_id, :reviewable_type, :reviewable_id)

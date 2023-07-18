@@ -7,4 +7,3 @@ module ProductFilter
     end
   end
 end
-
