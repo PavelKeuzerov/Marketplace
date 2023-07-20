@@ -10,7 +10,6 @@
 #   end
 # end
 
-
 module Carts
   class InitializeCart
     class << self
