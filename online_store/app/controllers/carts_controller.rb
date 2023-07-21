@@ -1,6 +1,7 @@
 class CartsController < ApplicationController
+  include VariableCart
   before_action :authenticate_user!
-  before_action :set_cart_item, only: %i[remove]
+  before_action :initialize_cart, only: %i[add]
 
   def show
     @render_cart = false
@@ -10,26 +11,26 @@ class CartsController < ApplicationController
     @product = Product.find_by(id: params[:id])
     quantity = params[:quantity].to_i
     current_cart_item = @cart.cart_items.find_by(product_id: @product.id)
-    if current_cart_item && quantity.positive?
+    if current_cart_item && quantity.positive? && @product
       current_cart_item.update(quantity:)
     elsif quantity <= 0
       current_cart_item.destroy
     else
       @cart.cart_items.create(product: @product, quantity:)
       # CartMailWorker.perform_async(@cart_mail)
-      CartMailer.perform(@product.user, @cart).deliver_later
+      # CartMailer.perform(@product.user, @cart).deliver_later
       redirect_to carts_path
     end
   end
 
   def remove
-    @cart_item.destroy
+    CartItem.find(params[:id]).destroy
     redirect_to carts_path
   end
 
   private
 
-  def set_cart_item
-    @cart_item = CartItem.find(params[:id])
+  def initialize_cart
+    load_variable_cart
   end
 end

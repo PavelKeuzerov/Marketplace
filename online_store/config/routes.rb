@@ -19,6 +19,7 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root 'products#index'
+  get 'search', to: 'products#search'
 
   patch 'change_locale' => 'locales#change_locale'
 

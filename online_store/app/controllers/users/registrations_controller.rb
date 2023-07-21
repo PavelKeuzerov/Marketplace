@@ -1,7 +1,6 @@
 module Users
   class RegistrationsController < Devise::RegistrationsController
     before_action :configure_sign_up_params, only: %i[create update]
-    # before_action :configure_sign_up_params, if: :devise_controller?
 
     def create
       super do |user|

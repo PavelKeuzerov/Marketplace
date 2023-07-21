@@ -1,14 +1,25 @@
 class ProductsController < ApplicationController
-  before_action :set_product, only: %i[show edit update destroy]
-  before_action :authenticate_user!, only: %i[edit create update new destroy]
+  include ProductReview
+  include VariableCart
+  before_action :authenticate_user!, only: %i[edit create update new destroy show index]
+  before_action :initialize_cart, only: %i[index]
 
   def index
+    @render_cart = true
     @products = Product.all
   end
 
+  def search
+    @product = ProductFilter::Search.call(params)
+    if @product.present?
+      @product
+    else
+      redirect_to products_path, notice: 'Not a valid combination'
+    end
+  end
+
   def show
-    @review = @product.reviews.build
-    @reviews = @product.reviews.order created_at: :desc
+    load_product_review
   end
 
   def new
@@ -16,6 +27,7 @@ class ProductsController < ApplicationController
   end
 
   def edit
+    @product = Product.find(params[:id])
     authorize @product
   end
 
@@ -31,6 +43,7 @@ class ProductsController < ApplicationController
   end
 
   def update
+    @product = Product.find(params[:id])
     if @product.update(product_params)
       redirect_to products_path
     else
@@ -39,21 +52,19 @@ class ProductsController < ApplicationController
   end
 
   def destroy
-    # binding.pry
+    @product = Product.find(params[:id])
     @product.destroy
     authorize @product
 
     redirect_to products_path
   end
 
-  def filter_product
-    render json: Products::FiterProduct.call
-  end
-
   private
 
-  def set_product
-    @product = Product.find(params[:id])
+  def initialize_cart
+    load_variable_cart
+
+    # @cart = Carts::InitializeCart.call(current_user.id)
   end
 
   def product_params
