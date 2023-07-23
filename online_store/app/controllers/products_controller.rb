@@ -17,6 +17,8 @@ class ProductsController < ApplicationController
 
   def show
     @product, @review, @reviews = ReviewVariable::ProductReview.call(params)
+    fresh_when last_modified: @product.created_at.utc, etag: @product
+    fresh_when last_modified: @review.updated_at, etag: @product.reviews.cache_key_with_version
   end
 
   def new
@@ -49,7 +51,6 @@ class ProductsController < ApplicationController
   end
 
   def destroy
-    # binding.pry
     @product = Product.find(params[:id])
     @product.destroy
     authorize @product
