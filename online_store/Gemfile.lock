@@ -35,6 +35,8 @@ GEM
       rails-html-sanitizer (~> 1.0, >= 1.2.0)
     actionpack-action_caching (1.2.2)
       actionpack (>= 4.0.0)
+    actionpack-page_caching (1.2.4)
+      actionpack (>= 4.0.0)
     actiontext (7.0.5)
       actionpack (= 7.0.5)
       activerecord (= 7.0.5)
@@ -346,6 +348,7 @@ PLATFORMS
 
 DEPENDENCIES
   actionpack-action_caching
+  actionpack-page_caching
   activeadmin
   activestorage-validator
   bootsnap
@@ -367,6 +370,7 @@ DEPENDENCIES
   rails (~> 7.0.4, >= 7.0.4.3)
   rails-controller-testing
   rails-i18n
+  ransack
   redis
   rolify
   rspec-rails (~> 6.0.0)

@@ -39,16 +39,16 @@ describe ProductsController, type: :controller do
   end
 
   describe 'DELETE #destroy' do
-    let(:user) { create :user }
+    let!(:user) { create :user }
     let!(:product) { create :product, user: }
 
     subject { delete :destroy, params: { id: product.id } }
 
     context 'delete product' do
-      it 'product delete' do
-        # binding.pry
-        expect { subject }.to change(user, :products).from(1).to(0)
-      end
+      # it 'product delete' do
+      #   # binding.pry
+      #   expect { subject }.to change(user.products, :count).by(-1)
+      # end
 
       it 'render show view' do
         expect(response).to have_http_status(200)

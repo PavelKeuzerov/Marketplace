@@ -3,19 +3,17 @@ class ProductsController < ApplicationController
   include VariableCart
   before_action :authenticate_user!, only: %i[edit create update new destroy show index]
   before_action :initialize_cart, only: %i[index]
+  # caches_page :show
 
   def index
-    @render_cart = true
-    @products = Product.all
-  end
-
-  def search
-    @product = ProductFilter::Search.call(params)
-    if @product.present?
-      @product
+    @q, @products = ProductFilter::Search.call(params)
+    if @products.present?
+      @products
     else
       redirect_to products_path, notice: 'Not a valid combination'
     end
+
+    @render_cart = true
   end
 
   def show
@@ -52,6 +50,7 @@ class ProductsController < ApplicationController
   end
 
   def destroy
+    # binding.pry
     @product = Product.find(params[:id])
     @product.destroy
     authorize @product
