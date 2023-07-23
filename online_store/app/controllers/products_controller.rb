@@ -1,7 +1,6 @@
 class ProductsController < ApplicationController
-  include ProductReview
   include VariableCart
-  before_action :authenticate_user!, only: %i[edit create update new destroy show index]
+  before_action :authenticate_user!, only: %i[edit create update new destroy show]
   before_action :initialize_cart, only: %i[index]
   # caches_page :show
 
@@ -17,7 +16,7 @@ class ProductsController < ApplicationController
   end
 
   def show
-    load_product_review
+    @product, @review, @reviews = ReviewVariable::ProductReview.call(params)
   end
 
   def new
@@ -62,8 +61,6 @@ class ProductsController < ApplicationController
 
   def initialize_cart
     load_variable_cart
-
-    # @cart = Carts::InitializeCart.call(current_user.id)
   end
 
   def product_params
