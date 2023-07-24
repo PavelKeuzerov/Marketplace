@@ -19,7 +19,6 @@ class ProductsController < ApplicationController
     @product, @review, @reviews = ReviewVariable::ProductReview.call(params)
     # fresh_when last_modified: @product.created_at.utc, etag: @product
     # fresh_when last_modified: @review.updated_at, etag: @product.reviews.cache_key_with_version
-    fresh_when last_modified: @product.updated_at
   end
 
   def new

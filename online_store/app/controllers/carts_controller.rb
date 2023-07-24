@@ -17,7 +17,7 @@ class CartsController < ApplicationController
       current_cart_item.destroy
     else
       @cart.cart_items.create(product: @product, quantity:)
-      send_mail(@product.user, @cart)
+      # send_mail(@product.user, @cart)
       redirect_to carts_path
     end
   end
@@ -33,10 +33,10 @@ class CartsController < ApplicationController
     load_variable_cart
   end
 
-  def send_mail(product, cart)
-    product_id = product.id
-    user_id = user_id.instance_of?(User) ? user.id : @product.user_id
-    cart_id = cart.id
-    Carts::Notifications::SendMailWorker.perform_async(product_id, user_id, cart_id)
-  end
+  # def send_mail(product, cart)
+  #   product_id = product.id
+  #   user_id = user_id.instance_of?(User) ? user.id : @product.user_id
+  #   cart_id = cart.id
+  #   Carts::Notifications::SendMailWorker.perform_async(product_id, user_id, cart_id)
+  # end
 end
