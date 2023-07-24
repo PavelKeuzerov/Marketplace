@@ -2,7 +2,7 @@ class ProductsController < ApplicationController
   include VariableCart
   before_action :authenticate_user!, only: %i[edit create update new destroy show]
   before_action :initialize_cart, only: %i[index]
-  # caches_page :show
+  caches_page :index
 
   def index
     @q, @products = ProductFilter::Search.call(params)
@@ -17,8 +17,9 @@ class ProductsController < ApplicationController
 
   def show
     @product, @review, @reviews = ReviewVariable::ProductReview.call(params)
-    fresh_when last_modified: @product.created_at.utc, etag: @product
-    fresh_when last_modified: @review.updated_at, etag: @product.reviews.cache_key_with_version
+    # fresh_when last_modified: @product.created_at.utc, etag: @product
+    # fresh_when last_modified: @review.updated_at, etag: @product.reviews.cache_key_with_version
+    fresh_when last_modified: @product.updated_at
   end
 
   def new
@@ -31,6 +32,7 @@ class ProductsController < ApplicationController
   end
 
   def create
+    expire_page :action => :index
     @product = Product.new(product_params)
     authorize @product
 

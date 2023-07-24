@@ -5,8 +5,8 @@ module Carts
 
       sidekiq_options queue: :mailers
 
-      def perform(cart_id, product_id)
-        SendMail.call(product_id.current_user_id, cart_id)
+      def perform(product, user, cart)
+        SendMail.call(product, user, cart)
       end
     end
   end
