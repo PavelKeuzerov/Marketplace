@@ -27,7 +27,7 @@ ___
   + Redis caching mechanisms
 
 + Docker
-  
+  + https://hub.docker.com/repository/docker/pavelkeuzerov/shop/general
 ___
      
 ### Created in programming language ___Ruby___ using the framework ___Ruby on Rails___, using database ___PostgreSQL___

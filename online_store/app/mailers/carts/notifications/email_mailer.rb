@@ -1,11 +1,11 @@
 module Carts
   module Notifications
     class EmailtMailer < ApplicationMailer
-      def new_cart(user, cart, product)
-        @cart = cart
-        @user = user
+      def new_cart(user, product)
         @product = product
-        mail(to: user.email, subject: 'New cart')
+        @user = user
+        @cart = cart
+        mail(to: user.email, subject: 'Your shopping cart')
       end
     end
   end
