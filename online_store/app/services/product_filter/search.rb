@@ -2,10 +2,10 @@ module ProductFilter
   class Search
     class << self
       def call(params)
-        @q = Product.ransack(params[:q])
-        @products = @q.result(distinct: true)
+        @filter = Product.ransack(params[:q])
+        @products = @filter.result(distinct: true)
 
-        [@q, @products]
+        [@filter, @products]
       end
     end
   end

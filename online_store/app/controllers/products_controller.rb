@@ -2,10 +2,9 @@ class ProductsController < ApplicationController
   include VariableCart
   before_action :authenticate_user!, only: %i[edit create update new destroy show]
   before_action :initialize_cart, only: %i[index]
-  caches_page :index
 
   def index
-    @q, @products = ProductFilter::Search.call(params)
+    @filter, @products = ProductFilter::Search.call(params)
     if @products.present?
       @products
     else
@@ -31,7 +30,6 @@ class ProductsController < ApplicationController
   end
 
   def create
-    expire_page :action => :index
     @product = Product.new(product_params)
     authorize @product
 

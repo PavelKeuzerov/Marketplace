@@ -1,5 +1,7 @@
 FactoryBot.define do
   factory :product do
+    association :user, factory: :user
+
     name { 'plate' }
     category { 'dishess' }
     product_detail { 'glas' }
