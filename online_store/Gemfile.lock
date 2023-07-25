@@ -35,6 +35,8 @@ GEM
       rails-html-sanitizer (~> 1.0, >= 1.2.0)
     actionpack-action_caching (1.2.2)
       actionpack (>= 4.0.0)
+    actionpack-page_caching (1.2.4)
+      actionpack (>= 4.0.0)
     actiontext (7.0.5)
       actionpack (= 7.0.5)
       activerecord (= 7.0.5)
@@ -84,6 +86,7 @@ GEM
     arbre (1.6.0)
       activesupport (>= 3.0.0, < 7.1)
       ruby2_keywords (>= 0.0.2, < 1.0)
+    awesome_print (1.9.2)
     bcrypt (3.1.18)
     bindex (0.8.1)
     bootsnap (1.16.0)
@@ -104,6 +107,9 @@ GEM
     connection_pool (2.4.1)
     crass (1.0.6)
     curb (1.0.5)
+    curl (0.0.9)
+      awesome_print (>= 0.2.1)
+      unidecoder (>= 1.1.1)
     date (3.3.3)
     debug (1.8.0)
       irb (>= 1.5.0)
@@ -322,6 +328,7 @@ GEM
       railties (>= 6.0.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
+    unidecoder (1.1.2)
     warden (1.2.9)
       rack (>= 2.0.9)
     web-console (4.2.0)
@@ -346,11 +353,13 @@ PLATFORMS
 
 DEPENDENCIES
   actionpack-action_caching
+  actionpack-page_caching
   activeadmin
   activestorage-validator
   bootsnap
   capybara
   curb
+  curl
   debug
   devise
   factory_bot_rails
@@ -367,6 +376,7 @@ DEPENDENCIES
   rails (~> 7.0.4, >= 7.0.4.3)
   rails-controller-testing
   rails-i18n
+  ransack
   redis
   rolify
   rspec-rails (~> 6.0.0)

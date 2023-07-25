@@ -2,7 +2,10 @@ module ProductFilter
   class Search
     class << self
       def call(params)
-        @product = Product.where('name LIKE ?', "%#{params[:query]}%")
+        @filter = Product.ransack(params[:q])
+        @products = @filter.result(distinct: true)
+
+        [@filter, @products]
       end
     end
   end

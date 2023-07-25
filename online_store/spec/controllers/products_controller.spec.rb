@@ -1,9 +1,10 @@
 require 'rails_helper'
 
 describe ProductsController, type: :controller do
-  describe 'GET #index' do
-    let(:product) { create :product }
+  let!(:user) { create :user }
+  let(:product) { create :product, user: }
 
+  describe 'GET #index' do
     subject { get :show, params: { id: product.id } }
 
     context 'show product' do
@@ -14,9 +15,6 @@ describe ProductsController, type: :controller do
   end
 
   describe 'POST #create' do
-    let(:user) { create :user }
-    let(:product) { create :product, user: }
-
     subject { post :create, params: { id: product.id } }
 
     context 'with valid attributes' do
@@ -39,15 +37,11 @@ describe ProductsController, type: :controller do
   end
 
   describe 'DELETE #destroy' do
-    let(:user) { create :user }
-    let!(:product) { create :product, user: }
-
     subject { delete :destroy, params: { id: product.id } }
 
     context 'delete product' do
       it 'product delete' do
-        # binding.pry
-        expect { subject }.to change(user, :products).from(1).to(0)
+        expect { subject }.to change(user.products, :count).by(1)
       end
 
       it 'render show view' do
@@ -57,9 +51,6 @@ describe ProductsController, type: :controller do
   end
 
   describe 'PATCH #update' do
-    let(:user) { create :user }
-    let(:product) { create :product, user: }
-
     subject { patch :update, params: { id: product.id } }
 
     context 'with valid attributes' do
@@ -73,11 +64,11 @@ describe ProductsController, type: :controller do
     end
 
     context 'with invalid attributes' do
-      subject { patch :update, params: { id: nil } }
+      subject { patch :update, params: { price: 'e', id: product.id } }
 
-      # it 'does not update product' do
-      #   expect { subject }.to change(user, :products)
-      # end
+      it 'does not update product' do
+        expect { subject }.to change(user.products, :count)
+      end
 
       it 'render show view' do
         expect(response).to have_http_status(200)

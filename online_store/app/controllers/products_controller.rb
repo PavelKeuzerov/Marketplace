@@ -1,25 +1,23 @@
 class ProductsController < ApplicationController
-  include ProductReview
   include VariableCart
-  before_action :authenticate_user!, only: %i[edit create update new destroy show index]
+  before_action :authenticate_user!, only: %i[edit create update new destroy show]
   before_action :initialize_cart, only: %i[index]
 
   def index
-    @render_cart = true
-    @products = Product.all
-  end
-
-  def search
-    @product = ProductFilter::Search.call(params)
-    if @product.present?
-      @product
+    @filter, @products = ProductFilter::Search.call(params)
+    if @products.present?
+      @products
     else
       redirect_to products_path, notice: 'Not a valid combination'
     end
+
+    @render_cart = true
   end
 
   def show
-    load_product_review
+    @product, @review, @reviews = ReviewVariable::ProductReview.call(params)
+    # fresh_when last_modified: @product.created_at.utc, etag: @product
+    # fresh_when last_modified: @review.updated_at, etag: @product.reviews.cache_key_with_version
   end
 
   def new
@@ -63,8 +61,6 @@ class ProductsController < ApplicationController
 
   def initialize_cart
     load_variable_cart
-
-    # @cart = Carts::InitializeCart.call(current_user.id)
   end
 
   def product_params
